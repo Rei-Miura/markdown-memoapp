@@ -20,14 +20,6 @@ class MemoApiService {
   delete(id: any): Promise<any> {
     return http.delete(`/api/memos/${id}`);
   }
-
-//   deleteAll(): Promise<any> {
-//     return http.delete(`/api/memos`);
-//   }
-
-//   findByDescription(title: string): Promise<any> {
-//     return http.get(`/api/memos?title=${title}`);
-//   }
 }
 
 export default new MemoApiService();

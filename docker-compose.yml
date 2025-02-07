@@ -1,46 +1,60 @@
 services:
-  mysql:
-    image: mysql:latest
-    container_name: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: memo_db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    ports:
-      - "3306:3306"
-    networks:
-      - app-network
-
-  backend:
+  back:
     build:
-      context: ./backend
-    container_name: go-app
+      context: .
+      dockerfile: ./backend/Dockerfile
+    container_name: back
+    tty: true 
+    volumes: # プロジェクトのコードを/src/backにマウント
+      - ./:/src/back
     environment:
       MYSQL_USER: user
       MYSQL_PASS: password
       MYSQL_HOST: mysql
       MYSQL_DBNAME: memo_db
     ports:
-      - "8989:8989"
-    depends_on:
+      - "8080:8080"
+    depends_on: 
       - mysql
     networks:
-      - app-network
+      - go_network
 
-  frontend:
+  front:
     build:
-      context: ./frontend
-    container_name: vue-app
-    environment:
-      VUE_APP_API_URL: "http://backend:8989"  # バックエンドのAPI URL
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    container_name: front
+    tty: true
+    environment: 
+      - NODE_ENV=development
     ports:
-      - "8080:8080"
-    depends_on:
-      - backend
+      - "3000:3000"
+    volumes:
+      - ./frontend:/src/front
+    depends_on: 
+      - mysql
     networks:
-      - app-network
+      - go_network
+
+  mysql:
+    image: mysql:8.0.27
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: memo_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./database/sql:/docker-entrypoint-initdb.d 
+    networks:
+      - go_network
+
+volumes:
+  mysql:
 
 networks:
-  app-network:
+  go_network:
     driver: bridge

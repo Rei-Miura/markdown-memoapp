@@ -69,7 +69,7 @@ func main() {
 	e.POST("/api/memos", postMemo)
 	e.PUT("/api/memos/:id", updateMemo)
 	e.DELETE("/api/memos/:id", deleteMemo)
-	e.Logger.Fatal(e.Start(":8989"))
+	e.Logger.Fatal(e.Start(":8080"))
 }
 
 func getMemoList(c echo.Context) error {
@@ -149,7 +149,6 @@ func updateMemo(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, []error{errors.New("Content not found")})
 	}
 
-	memo.Content = convertToHTMLString(memo.Content)
 	ctx := context.Background()
 	_, err := db.NewUpdate().Model(memo).Where("id = ?", memoId).Exec(ctx)
 	if err != nil {
