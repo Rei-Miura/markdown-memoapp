@@ -1,6 +1,7 @@
 init:
 	@make build
 	@make up
+	docker compose exec front bash -c 'npm install'
 up:
 	docker compose up -d
 down:
