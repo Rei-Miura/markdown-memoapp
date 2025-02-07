@@ -2,6 +2,9 @@
 Markdown形式の入力に対応したメモアプリです。  
 MarkdownからHTMLへの変換には[markdown-parser-go](https://github.com/Rei-Miura/markdown-parser-go/tree/main)を使用しました。
 
+## 使用例
+https://github.com/user-attachments/assets/f8df4da6-a829-4777-b6aa-a6489c8835a2
+
 ## 使用技術
 - Go 1.20
 - Node.js 18.15.0
