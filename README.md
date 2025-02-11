@@ -3,6 +3,7 @@ Markdown形式の入力に対応したメモアプリです。
 MarkdownからHTMLへの変換には[markdown-parser-go](https://github.com/Rei-Miura/markdown-parser-go/tree/main)を使用しました。
 
 ## 使用例
+https://github.com/user-attachments/assets/fb83960c-ca69-4caf-86e4-7faed8fe332e
 
 ## 使用技術
 - Go 1.20
